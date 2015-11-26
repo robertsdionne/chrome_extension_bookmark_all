@@ -44,18 +44,22 @@ function bookmarkAll(folderTitles) {
           populate: true,
         }, function(windows) {
           windows.forEach(function(win, i) {
-            maybeCreate({
+            chrome.bookmarks.create({
               parentId: day.id,
               title: String(i),
             }, function(folder) {
               win.tabs.forEach(function(tab, j) {
-                maybeCreate({
+                chrome.bookmarks.create({
                   parentId: folder.id,
                   title: tab.title,
                   url: tab.url,
                 });
               });
             });
+          });
+          chrome.bookmarks.create({
+            parentId: day.id,
+            title: '--',
           });
         });
       });

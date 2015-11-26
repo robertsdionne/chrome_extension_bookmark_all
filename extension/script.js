@@ -1,25 +1,7 @@
-function toShortISODateString(d) {
-  function pad(n) {
-    return n<10 ? '0'+n : n
-  }
-  return d.getFullYear()+'-'
-    + pad(d.getMonth()+1)+'-'
-    + pad(d.getDate());
-}
+
 $(document).ready(function(){
-  var folderTitle = toShortISODateString(new Date());
-  // Set default value to current date
-  $('#folderName').val(folderTitle);
-  console.log("Set placeholder to " + folderTitle);
-  // Handle button click
-  $('form').submit(function(){
-    // This seems the stupidest way to get the value
-    var folderName = $('#folderName').val();
-    window.close();
-    // Create bookmarks from background page
-    // I couldn't get it to work from here
-    // and there seemed to be a race condition with window.close()
-    chrome.extension.getBackgroundPage().bookmarkAll(folderName);
-    return false;
-  });
+  var folderTitles = new Date().toISOString().split('T')[0].split('-');
+  console.log('Set folderTitles to', folderTitles);
+  window.close();
+  chrome.extension.getBackgroundPage().bookmarkAll(folderTitles);
 });
